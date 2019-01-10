@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Movies Stand</string>
+
+    <!--Bottom Main Menu-->
+    <string name="menu_item_search">Search</string>
+    <string name="menu_item_favorites">Favorites</string>
+    <string name="menu_item_list">My List</string>
+
+    <!-- Search Fragment-->
+    <string name="search_hint">Search Movie</string>
+    <string name="search_our_recommendations">Our Recommendations</string>
+
+    <!-- Favorites Fragment-->
+    <string name="favorites_title">Favorite movies</string>
+
+</resources>

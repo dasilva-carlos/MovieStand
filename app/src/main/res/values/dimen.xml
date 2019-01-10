@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Fonts Sizes-->
+    <dimen name="font_extra_small">8sp</dimen>
+    <dimen name="font_small">12sp</dimen>
+    <dimen name="font_medium">16sp</dimen>
+    <dimen name="font_big">20sp</dimen>
+
+    <!--Margins-->
+    <dimen name="margin_extra_small">4dp</dimen>
+    <dimen name="margin_small">8dp</dimen>
+    <dimen name="margin_medium">16dp</dimen>
+    <dimen name="margin_big">24dp</dimen>
+
+    <!-- Miscellaneous -->
+    <dimen name="round_border">12dp</dimen>
+</resources>

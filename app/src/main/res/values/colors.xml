@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Primary-->
+    <color name="gray_dark">#262626</color>
+    <!--Primary Dark-->
+    <color name="black">#060405</color>
+    <!--Accent-->
+    <color name="orange_light">#f6904e</color>
+    
+    <color name="yellow">#fddc68</color>
+    <color name="reddish">#de3643</color>
+    <color name="blue">#9FA8DA</color>
+    <color name="white">#FAFAFA</color>
+    <color name="text_gray_light">#BDBDBD</color>
+    <color name="text_gray">#424242</color>
+
+    <color name="half_transparent">#99262626</color>
+
+</resources>

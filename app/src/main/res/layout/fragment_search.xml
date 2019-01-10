@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_dark">
+
+    <TextView
+        android:id="@+id/search_recommendations_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_medium"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:layout_marginTop="@dimen/margin_big"
+        android:layout_below="@id/search_wrapper_layout"
+        android:text="@string/search_our_recommendations"
+        style="@style/TitleText"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:layout_below="@id/search_recommendations_title"/>
+
+    <View
+        android:id="@+id/search_semi_transparent_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/half_transparent"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:id="@+id/search_wrapper_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_medium"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:layout_marginTop="@dimen/margin_big"
+        android:background="@drawable/bg_white_rounded"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center_vertical"
+            android:contentDescription="@string/search_hint"
+            android:src="@drawable/ic_search"
+            android:tint="@color/text_gray_light" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/margin_extra_small"
+            android:background="@android:color/transparent"
+            android:fontFamily="@font/comfortaa_regular"
+            android:hint="@string/search_hint"
+            android:textColor="@color/text_gray"
+            android:textColorHint="@color/text_gray_light" />
+    </LinearLayout>
+</RelativeLayout>
