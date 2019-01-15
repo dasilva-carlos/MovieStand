@@ -1,17 +1,22 @@
 package com.dasilvacarlos.moviesstand.presentation.main
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
-import android.support.v4.content.ContextCompat
 import android.view.MenuItem
+import android.view.View
 import com.dasilvacarlos.moviesstand.R
 import com.dasilvacarlos.moviesstand.presentation.generic.GenericActivity
 import com.dasilvacarlos.moviesstand.presentation.generic.GenericFragment
 import kotlinx.android.synthetic.main.activity_navigation.*
 
-class NavigationActivity : GenericActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
+class NavigationActivity : GenericActivity(), NavigationView, BottomNavigationView.OnNavigationItemSelectedListener {
 
+    companion object {
+        val animationDuration: Long = 800
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +44,14 @@ class NavigationActivity : GenericActivity(), BottomNavigationView.OnNavigationI
         return true
     }
 
+    override fun hideBottomBar() {
+        navigation_bottom_bar.visibility = View.GONE
+    }
+
+    override fun showBottomBar() {
+        navigation_bottom_bar.visibility = View.VISIBLE
+    }
+
     private fun setupBottomBar() {
         navigation_bottom_bar.setOnNavigationItemSelectedListener(this)
         navigation_bottom_bar.selectedItemId = R.id.navigation_search
@@ -47,7 +60,6 @@ class NavigationActivity : GenericActivity(), BottomNavigationView.OnNavigationI
     private fun setFragment(fragment: GenericFragment) {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.navigation_container, fragment)
-        transaction.addToBackStack(null)
         transaction.commit()
     }
 

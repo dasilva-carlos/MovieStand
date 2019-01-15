@@ -1,10 +1,8 @@
-package com.dasilvacarlos.moviesstand.presentation.helpers
+package com.dasilvacarlos.moviesstand.presentation.library.helpers
 
 import android.content.Context
 import android.content.res.ColorStateList
-import android.os.Build
 import android.support.annotation.ColorRes
-import android.support.annotation.IdRes
 
 
 class ColorStateListBuilder(context: Context) {

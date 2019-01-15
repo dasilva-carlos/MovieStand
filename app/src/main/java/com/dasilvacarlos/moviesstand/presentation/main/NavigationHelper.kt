@@ -6,7 +6,7 @@ import com.dasilvacarlos.moviesstand.presentation.main.fragments.favorites.Favor
 import com.dasilvacarlos.moviesstand.presentation.main.fragments.search.SearchFragment
 import com.dasilvacarlos.moviesstand.presentation.generic.GenericFragment
 import com.dasilvacarlos.moviesstand.presentation.generic.MovieStandApplication
-import com.dasilvacarlos.moviesstand.presentation.helpers.ColorStateListBuilder
+import com.dasilvacarlos.moviesstand.presentation.library.helpers.ColorStateListBuilder
 import com.dasilvacarlos.moviesstand.presentation.main.fragments.list.MyListFragment
 
 

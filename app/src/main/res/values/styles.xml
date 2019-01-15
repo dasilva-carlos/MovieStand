@@ -10,6 +10,9 @@
         <item name="android:textColorHint">@color/text_gray_light</item>
     </style>
 
+    <style name="Widget.Design.BottomNavigationView.FontComfortaa" parent="Widget.Design.BottomNavigationView">
+        <item name="android:fontFamily">@font/comfortaa_regular</item>
+    </style>
 
     <style name="TitleText" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/white</item>

@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/gray_dark"
+    android:animateLayoutChanges="true"
     tools:context="com.dasilvacarlos.moviesstand.presentation.main.NavigationActivity">
 
     <FrameLayout
@@ -22,6 +23,7 @@
         app:itemBackground="@color/black"
         app:itemIconTint="@color/white"
         app:itemTextColor="@color/white"
-        app:menu="@menu/bottom_navigation_menu"/>
+        app:menu="@menu/bottom_navigation_menu"
+        android:theme="@style/Widget.Design.BottomNavigationView.FontComfortaa"/>
 
 </RelativeLayout>
