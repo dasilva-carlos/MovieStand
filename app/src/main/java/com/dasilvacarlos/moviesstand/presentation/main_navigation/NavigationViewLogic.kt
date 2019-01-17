@@ -1,4 +1,4 @@
-package com.dasilvacarlos.moviesstand.presentation.main
+package com.dasilvacarlos.moviesstand.presentation.main_navigation
 
 
 interface NavigationView {

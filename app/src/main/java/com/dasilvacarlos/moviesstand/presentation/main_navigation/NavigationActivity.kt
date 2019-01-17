@@ -1,7 +1,5 @@
-package com.dasilvacarlos.moviesstand.presentation.main
+package com.dasilvacarlos.moviesstand.presentation.main_navigation
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
