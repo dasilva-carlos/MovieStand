@@ -1,4 +1,4 @@
-package com.dasilvacarlos.moviesstand.presentation.library.customviews
+package com.dasilvacarlos.moviesstand.presentation.library.custom_views
 
 import android.content.Context
 import android.support.v7.widget.AppCompatEditText

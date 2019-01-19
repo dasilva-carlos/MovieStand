@@ -1,4 +1,4 @@
-package com.dasilvacarlos.moviesstand.presentation.main.fragments.favorites
+package com.dasilvacarlos.moviesstand.presentation.scenes.favorites
 
 
 interface FavoritesView {

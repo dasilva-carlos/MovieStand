@@ -15,5 +15,5 @@
     <color name="text_gray">#424242</color>
 
     <color name="half_transparent">#99262626</color>
-
+    <color name="transparent">#00000000</color>
 </resources>

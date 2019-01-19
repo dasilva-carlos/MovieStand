@@ -14,5 +14,6 @@
 
     <!-- Miscellaneous -->
     <dimen name="round_border">12dp</dimen>
+    <dimen name="elevation">4dp</dimen>
 
 </resources>

@@ -10,7 +10,7 @@ import com.dasilvacarlos.moviesstand.presentation.generic.GenericActivity
 import com.dasilvacarlos.moviesstand.presentation.generic.GenericFragment
 import kotlinx.android.synthetic.main.activity_navigation.*
 
-class NavigationActivity : GenericActivity(), NavigationView, BottomNavigationView.OnNavigationItemSelectedListener {
+class NavigationActivity : GenericActivity(), NavigationViewLogic, BottomNavigationView.OnNavigationItemSelectedListener {
 
     companion object {
         val animationDuration: Long = 800

@@ -1,4 +1,4 @@
-package com.dasilvacarlos.moviesstand.presentation.main.fragments.search
+package com.dasilvacarlos.moviesstand.presentation.scenes.search
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
@@ -12,19 +12,28 @@ import kotlinx.android.synthetic.main.fragment_search.*
 import android.animation.ValueAnimator
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
+import android.support.v7.widget.LinearLayoutManager
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.KeyEvent
-import android.view.animation.BounceInterpolator
-import android.view.animation.LinearInterpolator
 import android.widget.RelativeLayout
-import com.dasilvacarlos.moviesstand.presentation.main.NavigationView
-import java.util.concurrent.Semaphore
+import com.dasilvacarlos.moviesstand.data.generics.ServiceError
+import com.dasilvacarlos.moviesstand.domain.search.SearchInteractor
+import com.dasilvacarlos.moviesstand.domain.search.SearchInteractorLogic
+import com.dasilvacarlos.moviesstand.domain.search.SearchUserCases
+import com.dasilvacarlos.moviesstand.domain.search.SearchViewLogic
+import com.dasilvacarlos.moviesstand.presentation.main_navigation.NavigationViewLogic
+import com.dasilvacarlos.moviesstand.presentation.scenes.search.adapter.SearchListAdapter
 
 
-class SearchFragment: GenericFragment(), SearchView {
+class SearchFragment: GenericFragment(), SearchViewLogic {
 
     companion object {
-        val animationDuration: Long = 600
+        const val ANIMATION_DURATION: Long = 600
+        const val MAX_RESULT_QUANTITY: Int = 10
     }
+
+    private val interactor: SearchInteractorLogic = SearchInteractor(this)
 
     private var searchViewLayoutParams: RelativeLayout.LayoutParams? = null
     private var roundBorderSize: Float? = null
@@ -38,6 +47,8 @@ class SearchFragment: GenericFragment(), SearchView {
     private var isSearchDisplayed = false
     private var lastAnimator: Animator? = null
 
+    private val searchListAdapter: SearchListAdapter by lazy { SearchListAdapter(context) }
+
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater?.inflate(R.layout.fragment_search, container, false)
     }
@@ -46,6 +57,18 @@ class SearchFragment: GenericFragment(), SearchView {
         super.onViewCreated(view, savedInstanceState)
         prepareListeners()
         prepareDefaultAnimationValues()
+        prepareSearchList()
+    }
+
+    override fun displaySearchResult(viewModel: SearchUserCases.SearchForMovieTitle.ViewModel) {
+        searchListAdapter.passViewModel(viewModel)
+    }
+
+    override fun displayError(request: Any, error: ServiceError) {
+        when (request){
+            is SearchUserCases.SearchForMovieTitle.Request -> searchListAdapter.setErrorMessage(error.getDescription(context))
+            else -> super.displayError(request, error)
+        }
     }
 
     private fun prepareListeners(){
@@ -58,25 +81,44 @@ class SearchFragment: GenericFragment(), SearchView {
         }
 
         search_semi_transparent_view.setOnClickListener {
-            search_parent_layout.requestFocus()
-            hideKeyboard()
+            dispatchHideSearch()
         }
 
         search_edit_text.onKeyPreImeListener = { _, event ->
-            if (event?.keyCode == KeyEvent.KEYCODE_BACK && event.action == KeyEvent.ACTION_UP) {
-                search_parent_layout.requestFocus()
-                hideKeyboard()
-                true
-            } else {
-                false
+            (event?.keyCode == KeyEvent.KEYCODE_BACK && event.action == KeyEvent.ACTION_UP).apply {
+                if(this) {
+
+                    dispatchHideSearch()
+                }
             }
         }
+
+        search_edit_text.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) { }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val titleQuery = s.toString()
+                requestQuery(titleQuery)
+            }
+        })
     }
 
-    fun prepareDefaultAnimationValues() {
+    private fun requestQuery(titleQuery: String) {
+        val request = SearchUserCases.SearchForMovieTitle.Request(titleQuery)
+        searchListAdapter.clearItems()
+        searchListAdapter.setErrorMessage(context.getString(R.string.search_searching))
+        interactor.searchForMovieTitle(request)
+    }
+
+    private fun prepareDefaultAnimationValues() {
         searchViewLayoutParams = RelativeLayout.LayoutParams(search_wrapper_layout.layoutParams as RelativeLayout.LayoutParams)
         roundBorderSize = resources.getDimension(R.dimen.round_border)
         semiTransparentAlpha = Color.alpha(resources.getColor(R.color.white))
+    }
+
+    private fun dispatchHideSearch() {
+        search_parent_layout.requestFocus()
+        hideKeyboard()
     }
 
     private fun displaySearch() {
@@ -88,13 +130,19 @@ class SearchFragment: GenericFragment(), SearchView {
                 setupSearchMargins(animationPercentage)
                 setupRoundCorners(animationPercentage)
                 setupSemiTransparentViewVisibility(animationPercentage)
-                (activity as? NavigationView)?.hideBottomBar()
+                (activity as? NavigationViewLogic)?.hideBottomBar()
             }
-            duration = animationDuration
+            duration = ANIMATION_DURATION
             addListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationStart(animation: Animator?) {
+                    super.onAnimationStart(animation)
                     search_semi_transparent_view.visibility = View.VISIBLE
-                    (activity as? NavigationView)?.hideBottomBar()
+                    (activity as? NavigationViewLogic)?.hideBottomBar()
+                }
+
+                override fun onAnimationEnd(animation: Animator?) {
+                    super.onAnimationEnd(animation)
+                    search_recycler_view.visibility = View.VISIBLE
                 }
             })
         }
@@ -111,11 +159,17 @@ class SearchFragment: GenericFragment(), SearchView {
                 setupRoundCorners(animationPercentage)
                 setupSemiTransparentViewVisibility(animationPercentage)
             }
-            duration = animationDuration
+            duration = ANIMATION_DURATION
             addListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationStart(animation: Animator?) {
+                    super.onAnimationStart(animation)
+                    search_recycler_view.visibility = View.GONE
+                }
+
                 override fun onAnimationEnd(animation: Animator?) {
+                    super.onAnimationEnd(animation)
                     search_semi_transparent_view.visibility = View.GONE
-                    (activity as? NavigationView)?.showBottomBar()
+                    (activity as? NavigationViewLogic)?.showBottomBar()
                 }
             })
         }
@@ -142,6 +196,18 @@ class SearchFragment: GenericFragment(), SearchView {
     private fun setupSemiTransparentViewVisibility(percentage: Int) {
         semiTransparentAlpha?.let {
             search_semi_transparent_view.background.alpha = calculateIntermediateValue(0, it, percentage)
+        }
+    }
+
+    private fun prepareSearchList() {
+        val viewManager = LinearLayoutManager(context)
+
+        search_recycler_view.apply {
+            // use a linear layout manager
+            layoutManager = viewManager
+
+            // specify an viewAdapter (see also next example)
+            adapter = searchListAdapter
         }
     }
 

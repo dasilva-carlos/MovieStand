@@ -3,7 +3,7 @@ package com.dasilvacarlos.moviesstand.data.models
 import com.google.gson.annotations.SerializedName
 
 
-class Movie {
+class MovieModel {
     @SerializedName("Title")
     val title: String? = null
 
@@ -34,7 +34,51 @@ class Movie {
     @SerializedName("Plot")
     val plot: String? = null
 
-    @SerializedName("")
+    @SerializedName("Language")
+    val language: String? = null
 
-    "Language":"English","Country":"Canada, UK, France","Awards":"13 wins & 24 nominations.","Poster":"https://m.media-amazon.com/images/M/MV5BMmY4OGRmNWMtNmIyNS00YWQ5LWJmMGUtMDI3MWRlMmQ0ZDQzL2ltYWdlXkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_SX300.jpg","Ratings":[{"Source":"Internet Movie Database","Value":"6.8/10"},{"Source":"Rotten Tomatoes","Value":"84%"},{"Source":"Metacritic","Value":"83/100"}],"Metascore":"83","imdbRating":"6.8","imdbVotes":"33,124","imdbID":"tt0278731","Type":"movie","DVD":"29 Jul 2003","BoxOffice":"$1,278,369","Production":"Sony Pictures Classics","Website":"http://www.spiderthemovie.com/","Response":"True"}
+    @SerializedName("Country")
+    val country: String? = null
+
+    @SerializedName("Awards")
+    val awards: String? = null
+
+    @SerializedName("Poster")
+    val poster: String? = null
+
+    @SerializedName("Ratings")
+    val ratings: List<RatingModel>? = null
+
+    @SerializedName("Metascore")
+    val metascore: String? = null
+
+    @SerializedName("imdbRating")
+    val imdbRating: String? = null
+
+    @SerializedName("imdbVotes")
+    val imdbVotes: String? = null
+
+    @SerializedName("imdbID")
+    val id: String? = null
+
+    @SerializedName("Type")
+    val type: String? = null
+
+    @SerializedName("DVD")
+    val dvd: String? = null
+
+    @SerializedName("BoxOffice")
+    val boxOffice: String? = null
+
+    @SerializedName("Production")
+    val production: String? = null
+
+    @SerializedName("Website")
+    val website: String? = null
+
+    @SerializedName("Response")
+    val response: Boolean? = null
+
+    @SerializedName("Error")
+    val error: String? = null
 }

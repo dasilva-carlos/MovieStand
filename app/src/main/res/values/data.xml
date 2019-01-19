@@ -1,2 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="unknown_error">Unknown Error</string>
+    <string name="not_found_error">Server Error</string>
+    <string name="authorization_error">Permission Error</string>
+    <string name="connexion_error">Connexion Error</string>
+</resources>

@@ -1,7 +1,7 @@
 package com.dasilvacarlos.moviesstand.presentation.main_navigation
 
 
-interface NavigationView {
+interface NavigationViewLogic {
     fun showBottomBar()
     fun hideBottomBar()
 }

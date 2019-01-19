@@ -1,13 +1,13 @@
-package com.dasilvacarlos.moviesstand.presentation.main
+package com.dasilvacarlos.moviesstand.presentation.main_navigation
 
 import android.content.res.ColorStateList
 import com.dasilvacarlos.moviesstand.R
-import com.dasilvacarlos.moviesstand.presentation.main.fragments.favorites.FavoritesFragment
-import com.dasilvacarlos.moviesstand.presentation.main.fragments.search.SearchFragment
+import com.dasilvacarlos.moviesstand.presentation.scenes.favorites.FavoritesFragment
+import com.dasilvacarlos.moviesstand.presentation.scenes.search.SearchFragment
 import com.dasilvacarlos.moviesstand.presentation.generic.GenericFragment
 import com.dasilvacarlos.moviesstand.presentation.generic.MovieStandApplication
 import com.dasilvacarlos.moviesstand.presentation.library.helpers.ColorStateListBuilder
-import com.dasilvacarlos.moviesstand.presentation.main.fragments.list.MyListFragment
+import com.dasilvacarlos.moviesstand.presentation.scenes.list.MyListFragment
 
 
 object NavigationHelper {

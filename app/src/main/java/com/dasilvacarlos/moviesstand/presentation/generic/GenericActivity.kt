@@ -4,11 +4,15 @@ import android.app.Activity
 import android.support.v7.app.AppCompatActivity
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
-
+import com.dasilvacarlos.moviesstand.data.generics.ServiceError
 
 abstract class GenericActivity: AppCompatActivity(), GenericView {
 
     var lastToast: Toast? = null
+
+    override fun displayError(request: Any, error: ServiceError) {
+        displayError(error.getDescription(this))
+    }
 
     override fun displayError(message: String) {
         val toast = Toast.makeText(this, message, Toast.LENGTH_LONG)

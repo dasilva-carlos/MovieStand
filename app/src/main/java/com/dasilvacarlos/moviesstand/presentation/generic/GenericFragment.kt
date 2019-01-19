@@ -4,8 +4,13 @@ import android.app.Activity
 import android.support.v4.app.Fragment
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import com.dasilvacarlos.moviesstand.data.generics.ServiceError
 
 abstract class GenericFragment: Fragment(), GenericView {
+
+    override fun displayError(request: Any, error: ServiceError) {
+        displayError(error.getDescription(context))
+    }
 
     override fun displayError(message: String) {
         val toast = Toast.makeText(context, message, Toast.LENGTH_LONG)

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/gray_dark"
     android:animateLayoutChanges="true"
-    tools:context="com.dasilvacarlos.moviesstand.presentation.main.NavigationActivity">
+    tools:context="com.dasilvacarlos.moviesstand.presentation.main_navigation.NavigationActivity">
 
     <FrameLayout
         android:id="@+id/navigation_container"

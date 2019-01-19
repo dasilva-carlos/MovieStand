@@ -1,4 +1,4 @@
-package com.dasilvacarlos.moviesstand.presentation.main.fragments.list
+package com.dasilvacarlos.moviesstand.presentation.scenes.list
 
 import android.os.Bundle
 import android.view.LayoutInflater
