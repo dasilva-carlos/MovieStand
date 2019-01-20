@@ -37,4 +37,13 @@
     <string name="details_rating">Rating:</string>
     <string name="details_plot">Resume:</string>
     <string name="details_error_save">An error has occurred</string>
+
+    <!--List-->
+    <string name="list_title">My Movie List</string>
+    <string name="list_order_by">Order by: </string>
+    <string name="list_order_by_titles">Title</string>
+    <string name="list_order_by_rating">Rating</string>
+    <string name="list_order_by_release">Release</string>
+
+    <string name="list_message">Empty list</string>
 </resources>

@@ -15,11 +15,13 @@ class MovieDatabaseModel(): Model() {
         const val TITLE_KEY = "Title"
         const val RELEASED_KEY = "Released"
         const val RATING_KEY = "imdbRating"
+        const val ALL_CAPS_TITLE_KEY = "AllCapsTitle"
     }
 
     constructor(movie: MovieModel) : this() {
         this.id = movie.id ?: ""
         this.title = movie.title
+        this.titleAllCaps = movie.title?.toUpperCase()
         this.year = movie.year
         this.rated = movie.rated
         this.released = movie.released?.let {
@@ -52,6 +54,9 @@ class MovieDatabaseModel(): Model() {
 
     @Column(name = TITLE_KEY)
     var title: String? = null
+
+    @Column(name = ALL_CAPS_TITLE_KEY)
+    var titleAllCaps: String? = null
 
     @Column(name = "Year")
     var year: String? = null

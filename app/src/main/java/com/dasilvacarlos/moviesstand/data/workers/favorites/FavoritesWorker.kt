@@ -67,7 +67,7 @@ class FavoritesWorker(private val receiver: FavoritesReceiver): FavoritesProvide
     override fun getFavoritesList(orderBy: FavoritesProvider.OrderByEnum) {
         Thread {
             val orderByClause = when(orderBy) {
-                FavoritesProvider.OrderByEnum.TITLE -> MovieDatabaseModel.TITLE_KEY
+                FavoritesProvider.OrderByEnum.TITLE -> MovieDatabaseModel.ALL_CAPS_TITLE_KEY
                 FavoritesProvider.OrderByEnum.RATING -> MovieDatabaseModel.RATING_KEY
                 FavoritesProvider.OrderByEnum.RELEASE -> MovieDatabaseModel.RELEASED_KEY
                 FavoritesProvider.OrderByEnum.RANDOM -> "RANDOM()"
