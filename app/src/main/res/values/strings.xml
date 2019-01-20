@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Movies Stand</string>
+    <string name="app_name">Movie Stand</string>
 
     <!-- Ipsum Lorem-->
     <string name="ipsum_small">Lorem ipsum</string>
@@ -19,7 +19,8 @@
     <string name="search_searching">Searching…</string>
 
     <!-- Favorites Fragment-->
-    <string name="favorites_title">Favorite movies</string>
+    <string name="favorites_title">My favorite movies</string>
+    <string name="favorites_message">Empty favorites list</string>
 
     <!-- Generics-->
     <string name="year">Year:</string>
@@ -35,4 +36,5 @@
     <string name="details_actors">Actors:</string>
     <string name="details_rating">Rating:</string>
     <string name="details_plot">Resume:</string>
+    <string name="details_error_save">An error has occurred</string>
 </resources>

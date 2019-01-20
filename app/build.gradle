@@ -24,6 +24,8 @@ android {
 
 repositories {
     google()
+    mavenCentral()
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
 }
 
 dependencies {
@@ -51,4 +53,7 @@ dependencies {
 
     //Image Handler
     implementation 'com.squareup.picasso:picasso:2.71828'
+
+    //ORM
+    implementation 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
 }

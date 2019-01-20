@@ -83,6 +83,7 @@
                 android:layout_centerVertical="true"
                 android:padding="@dimen/margin_small"
                 android:src="@drawable/ic_star_empty"
+                android:visibility="gone"
                 tools:ignore="ContentDescription">
             </ImageView>
 

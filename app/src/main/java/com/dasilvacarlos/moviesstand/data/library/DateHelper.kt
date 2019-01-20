@@ -1,7 +1,6 @@
-package com.dasilvacarlos.moviesstand.domain.library
+package com.dasilvacarlos.moviesstand.data.library
 
 import java.text.SimpleDateFormat
-import java.time.format.DateTimeFormatter
 import java.util.*
 
 
@@ -9,7 +8,8 @@ class DateHelper {
 
     enum class DateFormatType(val format: String) {
         OMDB_FORMAT("dd MMM yyyy"),
-        DISPLAY_CALENDAR_FORMAT("dd/MM/yyyy")
+        DISPLAY_CALENDAR_FORMAT("dd/MM/yyyy"),
+        DATABASE_FORMAT("yyyy-MM-dd")
     }
 
     companion object {

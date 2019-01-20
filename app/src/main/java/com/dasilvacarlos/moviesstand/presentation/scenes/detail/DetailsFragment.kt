@@ -6,13 +6,16 @@ import android.support.v4.content.res.ResourcesCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import com.dasilvacarlos.moviesstand.R
 import com.dasilvacarlos.moviesstand.data.models.MovieModel
 import com.dasilvacarlos.moviesstand.data.models.ResumedMovieModel
 import com.dasilvacarlos.moviesstand.domain.app.detail.*
 import com.dasilvacarlos.moviesstand.presentation.generic.GenericFragment
+import com.dasilvacarlos.moviesstand.presentation.library.helpers.FavoriteStarHelper
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_detail.*
+import kotlinx.android.synthetic.main.item_search_list.view.*
 import kotlinx.android.synthetic.main.layout_inside_details.*
 import java.io.Serializable
 
@@ -40,6 +43,7 @@ class DetailsFragment: GenericFragment(), DetailViewLogic, DetailDataRecover {
     }
 
     private val interactor: DetailInteractorLogic = DetailInteractor(this, this)
+    private lateinit var starHelper: FavoriteStarHelper
 
     override val movie: Serializable
         get() = getBundleInformation()
@@ -50,6 +54,7 @@ class DetailsFragment: GenericFragment(), DetailViewLogic, DetailDataRecover {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        prepareFavoriteStar()
         requestInformation()
     }
 
@@ -70,6 +75,8 @@ class DetailsFragment: GenericFragment(), DetailViewLogic, DetailDataRecover {
 
             collapsing_toolbar.setCollapsedTitleTypeface(ResourcesCompat.getFont(context!!, R.font.comfortaa_bold))
             collapsing_toolbar.setExpandedTitleTypeface(ResourcesCompat.getFont(context!!, R.font.comfortaa_bold))
+
+            starHelper.statusChange(viewModel.isFavorite)
         }
     }
 
@@ -98,9 +105,24 @@ class DetailsFragment: GenericFragment(), DetailViewLogic, DetailDataRecover {
         }
     }
 
+    override fun displayFavoriteChange(viewModel: DetailUserCases.ChangeFavorite.ViewModel) {
+        starHelper.statusChange(viewModel.isFavorite, viewModel.isSuccess)
+        if(!viewModel.isSuccess) {
+            displayError(getString(R.string.details_error_save))
+        }
+    }
+
     private fun requestInformation() {
         interactor.requestTitle(DetailUserCases.DetailTitle.Request())
         interactor.requestInformation(DetailUserCases.DetailInformation.Request())
+    }
+
+    private fun prepareFavoriteStar(){
+        starHelper = FavoriteStarHelper(detail_star_image)
+        detail_star_image.setOnClickListener {
+            starHelper.animateWaitingForResult()
+            interactor.requestFavoriteChange(DetailUserCases.ChangeFavorite.Request(!starHelper.isFilled))
+        }
     }
 
     private fun getBundleInformation(): Serializable {

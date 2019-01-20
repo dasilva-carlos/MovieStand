@@ -1,15 +1,17 @@
 package com.dasilvacarlos.moviesstand.domain.app.detail
 
 import com.dasilvacarlos.moviesstand.data.generics.ServiceError
-import com.dasilvacarlos.moviesstand.domain.library.DateHelper
+import com.dasilvacarlos.moviesstand.data.library.DateHelper
 
 
 class DetailPresenter(val view: DetailViewLogic): DetailPresenterLogic {
 
+
     override fun presentTitle(response: DetailUserCases.DetailTitle.Result) {
         val viewModel = DetailUserCases.DetailTitle
                 .ViewModel(response.title ?: "-",
-                            response.banner ?: "-")
+                            response.banner ?: "-",
+                            response.isFavorite)
         view.displayTitle(viewModel)
     }
 
@@ -35,6 +37,12 @@ class DetailPresenter(val view: DetailViewLogic): DetailPresenterLogic {
         } else {
             view.displayError(DetailUserCases.DetailInformation.Request(), ServiceError.NOT_FOUND)
         }
+    }
+
+    override fun presentFavoriteChange(response: DetailUserCases.ChangeFavorite.Result) {
+        view.displayFavoriteChange(
+                viewModel = DetailUserCases.ChangeFavorite
+                        .ViewModel(response.isSuccess, response.isFavorite))
     }
 
     override fun presentError(request: Any, serviceError: ServiceError) {

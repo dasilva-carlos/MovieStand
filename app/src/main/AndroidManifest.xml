@@ -9,11 +9,29 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+
+        <!--DB config-->
+        <provider
+            android:name="com.activeandroid.content.ContentProvider"
+            android:authorities="com.dasilvacarlos.moviesstand"
+            android:enabled="true"
+            android:exported="false">
+        </provider>
+        <meta-data android:name="AA_DB_NAME" android:value="MoviesStand" />
+        <meta-data android:name="AA_DB_VERSION" android:value="1" />
+        <meta-data
+            android:name="AA_MODELS"
+            android:value="com.dasilvacarlos.moviesstand.data.models.MovieDatabaseModel" />
+
+
+        <!--Activities-->
         <activity android:name=".presentation.main_navigation.NavigationActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Launcher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />

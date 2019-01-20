@@ -12,14 +12,12 @@ import com.dasilvacarlos.moviesstand.domain.app.search.SearchUserCases
 class SearchListAdapter(val context: Context): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
-        const val DEFAULT_RESULT_NUMBER = 5
         const val WARNING_VIEW = 0
         const val ITEM_VIEW = 1
     }
 
     var itemClick: ((Int) -> (Unit))? = null
     private val viewModels: MutableList<SearchUserCases.SearchForMovieTitle.ViewModel.Item> = mutableListOf()
-    private var itemCount = DEFAULT_RESULT_NUMBER
     private var errorMessage: String? = context.getString(R.string.search_type)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -80,7 +78,6 @@ class SearchListAdapter(val context: Context): RecyclerView.Adapter<RecyclerView
 
     fun clearItems() {
         viewModels.clear()
-        itemCount = DEFAULT_RESULT_NUMBER
         errorMessage = null
         notifyDataSetChanged()
     }

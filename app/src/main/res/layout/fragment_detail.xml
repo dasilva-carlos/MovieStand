@@ -27,12 +27,12 @@
                 app:contentScrim="@color/black"
                 app:expandedTitleMarginStart="@dimen/margin_medium"
                 app:expandedTitleMarginBottom="0dp"
-                app:title="@string/ipsum_medium"
                 app:maxLines="3"
                 app:expandedTitleMarginEnd="@dimen/margin_medium"
                 app:collapsedTitleTextAppearance="@style/NormalText"
                 app:expandedTitleTextAppearance="@style/ExpandedTheme"
                 app:lineSpacingMultiplier="0.9">
+
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -49,9 +49,12 @@
                         tool:src="@drawable/test_movie_banner"
                         android:layout_above="@id/detail_toolbar_background"/>
 
+
+
                     <View
+                        android:id="@+id/detail_shadow"
                         android:layout_width="match_parent"
-                        android:layout_height="60dp"
+                        android:layout_height="70dp"
                         android:background="@drawable/bg_transparent_to_black_vertical"
                         android:layout_above="@id/detail_toolbar_background"/>
 
@@ -63,18 +66,24 @@
                         android:layout_alignParentBottom="true"/>
 
                     <ImageView
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:id="@+id/detail_star_image"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_alignParentBottom="true"
                         android:layout_alignParentEnd="true"
-                        android:layout_margin="@dimen/margin_small"
-                        android:padding="@dimen/margin_small"
+                        android:layout_marginBottom="70dp"
+                        android:padding="@dimen/margin_medium"
                         android:src="@drawable/ic_star_empty" />
+
+
                 </RelativeLayout>
 
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/detail_toolbar"
                     android:layout_height="?android:attr/actionBarSize"
                     android:layout_width="match_parent"
+                    android:clickable="false"
+                    android:focusable="false"
                     app:layout_collapseMode="pin"/>
 
             </net.opacapp.multilinecollapsingtoolbar.CollapsingToolbarLayout>

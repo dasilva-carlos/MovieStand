@@ -16,6 +16,7 @@
     <!-- Miscellaneous -->
     <dimen name="round_border">12dp</dimen>
     <dimen name="elevation">4dp</dimen>
+    <dimen name="divider">1dp</dimen>
 
     <dimen name="abc_text_size_title_material_toolbar"
         tools:override="true">16dp</dimen>

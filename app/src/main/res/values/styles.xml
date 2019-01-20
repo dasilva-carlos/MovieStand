@@ -10,6 +10,11 @@
         <item name="android:textColorHint">@color/text_gray_light</item>
     </style>
 
+    <style name="AppTheme.Launcher">
+        <item name="android:windowBackground">@drawable/launch_screen</item>
+
+    </style>
+
     <style name="Theme.SemiTransparent" parent="AppTheme">
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@color/half_transparent</item>

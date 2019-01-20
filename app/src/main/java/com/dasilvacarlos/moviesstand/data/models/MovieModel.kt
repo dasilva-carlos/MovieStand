@@ -3,83 +3,83 @@ package com.dasilvacarlos.moviesstand.data.models
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-
 class MovieModel: Serializable {
-    @SerializedName("Title")
-    val title: String? = null
-
-    @SerializedName("Year")
-    val year: String? = null
-
-    @SerializedName("Rated")
-    val rated: String? = null
-
-    @SerializedName("Released")
-    val released: String? = null
-
-    @SerializedName("Runtime")
-    val runtime: String? = null
-
-    @SerializedName("Genre")
-    val genre: String? = null
-
-    @SerializedName("Director")
-    val director: String? = null
-
-    @SerializedName("Writer")
-    val writer: String? = null
-
-    @SerializedName("Actors")
-    val actors: String? = null
-
-    @SerializedName("Plot")
-    val plot: String? = null
-
-    @SerializedName("Language")
-    val language: String? = null
-
-    @SerializedName("Country")
-    val country: String? = null
-
-    @SerializedName("Awards")
-    val awards: String? = null
-
-    @SerializedName("Poster")
-    val poster: String? = null
-
-    @SerializedName("Ratings")
-    val ratings: List<RatingModel>? = null
-
-    @SerializedName("Metascore")
-    val metascore: String? = null
-
-    @SerializedName("imdbRating")
-    val imdbRating: String? = null
-
-    @SerializedName("imdbVotes")
-    val imdbVotes: String? = null
 
     @SerializedName("imdbID")
-    val id: String? = null
+    var id: String? = null
+
+    @SerializedName("Title")
+    var title: String? = null
+
+    @SerializedName("Year")
+    var year: String? = null
+
+    @SerializedName("Rated")
+    var rated: String? = null
+
+    @SerializedName("Released")
+    var released: String? = null
+
+    @SerializedName("Runtime")
+    var runtime: String? = null
+
+    @SerializedName("Genre")
+    var genre: String? = null
+
+    @SerializedName("Director")
+    var director: String? = null
+
+    @SerializedName("Writer")
+    var writer: String? = null
+
+    @SerializedName("Actors")
+    var actors: String? = null
+
+    @SerializedName("Plot")
+    var plot: String? = null
+
+    @SerializedName("Language")
+    var language: String? = null
+
+    @SerializedName("Country")
+    var country: String? = null
+
+    @SerializedName("Awards")
+    var awards: String? = null
+
+    @SerializedName("Poster")
+    var poster: String? = null
+
+    @SerializedName("Ratings")
+    var ratings: List<RatingModel>? = null
+
+    @SerializedName("Metascore")
+    var metascore: String? = null
+
+    @SerializedName("imdbRating")
+    var imdbRating: String? = null
+
+    @SerializedName("imdbVotes")
+    var imdbVotes: String? = null
 
     @SerializedName("Type")
-    val type: String? = null
+    var type: String? = null
 
     @SerializedName("DVD")
-    val dvd: String? = null
+    var dvd: String? = null
 
     @SerializedName("BoxOffice")
-    val boxOffice: String? = null
+    var boxOffice: String? = null
 
     @SerializedName("Production")
-    val production: String? = null
+    var production: String? = null
 
     @SerializedName("Website")
-    val website: String? = null
+    var website: String? = null
 
     @SerializedName("Response")
-    val response: Boolean? = null
+    var response: Boolean? = null
 
     @SerializedName("Error")
-    val error: String? = null
+    var error: String? = null
 }

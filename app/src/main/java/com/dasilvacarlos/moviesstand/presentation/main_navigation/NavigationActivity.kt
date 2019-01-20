@@ -12,11 +12,9 @@ import kotlinx.android.synthetic.main.activity_navigation.*
 
 class NavigationActivity : GenericActivity(), NavigationViewLogic, BottomNavigationView.OnNavigationItemSelectedListener {
 
-    companion object {
-        val animationDuration: Long = 800
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_navigation)
         setupBottomBar()
