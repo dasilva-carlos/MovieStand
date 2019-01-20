@@ -43,7 +43,7 @@ class FavoritesWorker(private val receiver: FavoritesReceiver): FavoritesProvide
             var concatenatedIds = ""
             val map = HashMap<String, Boolean>()
             ids.forEach {
-                concatenatedIds = "'$concatenatedIds$it',"
+                concatenatedIds = "$concatenatedIds'$it',"
                 map[it] = false
             }
             concatenatedIds = concatenatedIds.removeSuffix(",")
@@ -68,8 +68,8 @@ class FavoritesWorker(private val receiver: FavoritesReceiver): FavoritesProvide
         Thread {
             val orderByClause = when(orderBy) {
                 FavoritesProvider.OrderByEnum.TITLE -> MovieDatabaseModel.ALL_CAPS_TITLE_KEY
-                FavoritesProvider.OrderByEnum.RATING -> MovieDatabaseModel.RATING_KEY
-                FavoritesProvider.OrderByEnum.RELEASE -> MovieDatabaseModel.RELEASED_KEY
+                FavoritesProvider.OrderByEnum.RATING -> "${MovieDatabaseModel.RATING_KEY} DESC"
+                FavoritesProvider.OrderByEnum.RELEASE -> "${MovieDatabaseModel.RELEASED_KEY} DESC"
                 FavoritesProvider.OrderByEnum.RANDOM -> "RANDOM()"
             }
 

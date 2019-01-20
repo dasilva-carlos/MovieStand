@@ -23,6 +23,12 @@ class SearchPresenter(val view: SearchViewLogic): SearchPresenterLogic {
         view.displaySearchResult(viewModel)
     }
 
+    override fun presentFavoriteChange(response: SearchUserCases.ChangeFavorite.Result) {
+        view.displayFavoriteChange(
+                viewModel = SearchUserCases.ChangeFavorite
+                        .ViewModel(response.isSuccess, response.isFavorite, response.index))
+    }
+
     override fun presentError(request: Any, serviceError: ServiceError) {
         view.displayError(request, error = serviceError)
     }

@@ -46,12 +46,12 @@ class FavoriteStarHelper(val image: ImageView) {
     private fun buildSpinningAnimation(): Animation {
         val animation =  RotateAnimation(
                 0.0F,
-                36.0F,
+                359.0F,
                 Animation.RELATIVE_TO_SELF,
                 0.5f,
                 Animation.RELATIVE_TO_SELF,
                 0.5f)
-        animation.duration = 100
+        animation.duration = 500
         animation.repeatCount = Animation.INFINITE
         return animation
     }

@@ -14,14 +14,12 @@
         tool:text="@string/ipsum_medium"
         android:paddingStart="@dimen/margin_medium"
         android:paddingEnd="@dimen/margin_medium"
-        android:paddingTop="@dimen/margin_small"
-        android:paddingBottom="@dimen/margin_small"/>
+        android:paddingTop="@dimen/margin_medium"
+        android:paddingBottom="@dimen/margin_medium"/>
 
     <View
         android:id="@+id/item_list_divider"
         android:layout_width="match_parent"
         android:layout_height="@dimen/divider"
-        android:layout_marginStart="@dimen/margin_medium"
-        android:layout_marginEnd="@dimen/margin_medium"
-        android:background="@color/text_gray_light"/>
+        android:background="@color/orange_light"/>
 </LinearLayout>

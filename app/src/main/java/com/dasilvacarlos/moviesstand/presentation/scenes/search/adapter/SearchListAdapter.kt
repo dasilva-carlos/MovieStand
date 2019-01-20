@@ -17,6 +17,7 @@ class SearchListAdapter(val context: Context): RecyclerView.Adapter<RecyclerView
     }
 
     var itemClick: ((Int) -> (Unit))? = null
+    var itemStarClick: ((Int, Boolean) -> (Unit))? = null
     private val viewModels: MutableList<SearchUserCases.SearchForMovieTitle.ViewModel.Item> = mutableListOf()
     private var errorMessage: String? = context.getString(R.string.search_type)
 
@@ -45,7 +46,14 @@ class SearchListAdapter(val context: Context): RecyclerView.Adapter<RecyclerView
             if (viewModels.count() > position) {
                 val viewModel = viewModels[position]
                 holder.dataBind(viewModel)
-                holder.configOnClick(onItemClick = View.OnClickListener { itemClick?.invoke(position) })
+                holder.configOnClick(
+                        onItemClick = View.OnClickListener {itemClick?.invoke(position)},
+                        onStarClick = object: (Boolean) -> (Unit) {
+                            override fun invoke(p1: Boolean) {
+                                itemStarClick?.invoke(position,p1)
+                            }
+                        }
+                )
             }
         }
 
@@ -67,6 +75,11 @@ class SearchListAdapter(val context: Context): RecyclerView.Adapter<RecyclerView
                 }
             }
         }
+    }
+
+    fun updateIsFavorite(viewModel: SearchUserCases.ChangeFavorite.ViewModel) {
+        viewModels[viewModel.index].isFavorite = viewModel.isFavorite
+        notifyItemChanged(viewModel.index)
     }
 
     fun setErrorMessage(error: String) {

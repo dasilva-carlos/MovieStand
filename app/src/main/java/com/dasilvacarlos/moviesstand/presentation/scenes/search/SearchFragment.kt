@@ -30,7 +30,6 @@ class SearchFragment: GenericFragment(), SearchViewLogic {
 
     companion object {
         const val ANIMATION_DURATION: Long = 600
-        const val MAX_RESULT_QUANTITY: Int = 10
     }
 
     private val interactor: SearchInteractorLogic = SearchInteractor(this)
@@ -63,6 +62,13 @@ class SearchFragment: GenericFragment(), SearchViewLogic {
 
     override fun displaySearchResult(viewModel: SearchUserCases.SearchForMovieTitle.ViewModel) {
         searchListAdapter.passViewModel(viewModel)
+    }
+
+    override fun displayFavoriteChange(viewModel: SearchUserCases.ChangeFavorite.ViewModel) {
+        searchListAdapter.updateIsFavorite(viewModel)
+        if(!viewModel.isSuccess) {
+            displayError(getString(R.string.details_error_save))
+        }
     }
 
     override fun displayError(request: Any, error: ServiceError) {
@@ -107,6 +113,11 @@ class SearchFragment: GenericFragment(), SearchViewLogic {
                 val intent = DetailsContainerActivity.getNewIntent(context!!, dataStore.moviesSearched, index)
                 startActivity(intent)
             }
+        }
+
+        searchListAdapter.itemStarClick = { index, save ->
+            interactor.requestFavoriteChange(SearchUserCases.ChangeFavorite
+                    .Request(index = index, isFavorite = save))
         }
     }
 

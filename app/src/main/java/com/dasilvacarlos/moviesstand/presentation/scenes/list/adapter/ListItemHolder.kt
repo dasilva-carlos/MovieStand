@@ -9,4 +9,12 @@ class ListItemHolder (itemView: View): RecyclerView.ViewHolder(itemView) {
     fun dataBind(viewModel: String) {
         itemView.item_list_title.text = viewModel
     }
+
+    fun configOnClick(onItemClick: View.OnClickListener) {
+        itemView.setOnClickListener(onItemClick)
+    }
+
+    fun setDividerVisibility(isVisible: Boolean){
+        itemView.item_list_divider.visibility = if(isVisible) View.VISIBLE else View.INVISIBLE
+    }
 }

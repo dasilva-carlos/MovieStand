@@ -65,7 +65,7 @@ class DetailsContainerActivity: GenericActivity() {
 
     private fun setupViewPager() {
         details_activity_view_pager.adapter = DetailsPagerAdapter(supportFragmentManager, movieList)
-        details_activity_view_pager.offscreenPageLimit = 5
+        details_activity_view_pager.offscreenPageLimit = 3
         details_activity_view_pager.currentItem = startIndex
 
         val margin = MovieStandApplication.instance.applicationContext.resources.getDimension(R.dimen.margin_big).toInt()

@@ -1,6 +1,8 @@
 package com.dasilvacarlos.moviesstand.presentation.scenes.list
 
+import android.graphics.Typeface
 import android.os.Bundle
+import android.support.v4.content.res.ResourcesCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -8,11 +10,9 @@ import android.view.ViewGroup
 import android.widget.Button
 import com.dasilvacarlos.moviesstand.R
 import com.dasilvacarlos.moviesstand.data.workers.favorites.FavoritesProvider
-import com.dasilvacarlos.moviesstand.domain.app.list.ListInteractor
-import com.dasilvacarlos.moviesstand.domain.app.list.ListInteractorLogic
-import com.dasilvacarlos.moviesstand.domain.app.list.ListUserCases
-import com.dasilvacarlos.moviesstand.domain.app.list.ListViewLogic
+import com.dasilvacarlos.moviesstand.domain.app.list.*
 import com.dasilvacarlos.moviesstand.presentation.generic.GenericFragment
+import com.dasilvacarlos.moviesstand.presentation.scenes.detail.DetailsContainerActivity
 import com.dasilvacarlos.moviesstand.presentation.scenes.list.adapter.ListAdapter
 import kotlinx.android.synthetic.main.fragment_my_list.*
 
@@ -26,6 +26,7 @@ class MyListFragment: GenericFragment(), ListViewLogic, View.OnClickListener {
     }
 
     private val interactor: ListInteractorLogic = ListInteractor(this)
+    private val dataStore: ListDataStore? by lazy { interactor as? ListDataStore }
     private var orderSelect: OrderSelect = OrderSelect.TITLE
     private val listAdapter: ListAdapter by lazy { ListAdapter(context!!) }
 
@@ -61,7 +62,7 @@ class MyListFragment: GenericFragment(), ListViewLogic, View.OnClickListener {
     override fun displayFavorites(viewModel: ListUserCases.FavoritesList.ViewModel) {
         if(viewModel.items.count() > 0) {
             list_empty_text.visibility = View.GONE
-            listAdapter.passViewModel(viewModel)
+            listAdapter.passViewModel(viewModel, orderSelect == OrderSelect.RATING)
         } else {
             list_empty_text.visibility = View.VISIBLE
             listAdapter.clear()
@@ -72,6 +73,13 @@ class MyListFragment: GenericFragment(), ListViewLogic, View.OnClickListener {
         list_button_title.setOnClickListener(this)
         list_button_rating.setOnClickListener(this)
         list_button_release.setOnClickListener(this)
+
+        listAdapter.itemClick = { index ->
+            dataStore?.let { dataStore ->
+                val intent = DetailsContainerActivity.getNewIntentDetailed(context!!, dataStore.moviesFavorites, index)
+                startActivity(intent)
+            }
+        }
     }
 
     private fun prepareRecyclerView(){
@@ -101,7 +109,7 @@ class MyListFragment: GenericFragment(), ListViewLogic, View.OnClickListener {
             }
             OrderSelect.RATING -> {
                 displayAsUnselected(list_button_title)
-                displayAsUnselected(list_button_rating)
+                displayAsSelected(list_button_rating)
                 displayAsUnselected(list_button_release)
             }
             OrderSelect.RELEASE -> {
@@ -116,10 +124,12 @@ class MyListFragment: GenericFragment(), ListViewLogic, View.OnClickListener {
     private fun displayAsSelected(button: Button){
         button.setBackgroundResource(R.drawable.bg_button_selected)
         button.setTextColor(resources.getColor(R.color.white))
+        button.typeface = ResourcesCompat.getFont(context!!, R.font.comfortaa_bold)
     }
 
     private fun displayAsUnselected(button: Button){
         button.setBackgroundResource(R.drawable.bg_button_border)
         button.setTextColor(resources.getColor(R.color.reddish))
+        button.typeface = ResourcesCompat.getFont(context!!, R.font.comfortaa_regular)
     }
 }

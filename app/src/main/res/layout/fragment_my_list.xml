@@ -26,9 +26,10 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="44dp"
+        android:layout_height="36dp"
         android:orientation="horizontal"
         android:layout_marginEnd="@dimen/margin_medium"
+        android:layout_marginBottom="@dimen/margin_medium"
         android:layout_marginStart="@dimen/margin_medium">
 
         <Button
@@ -78,13 +79,14 @@
         android:textAlignment="center"
         android:visibility="visible"
         style="@style/NormalText"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider"
+        android:background="@color/orange_light"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/list_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:requiresFadingEdge="vertical"
-        android:fadingEdge="vertical"
-        android:fadingEdgeLength="@dimen/margin_medium"/>
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>

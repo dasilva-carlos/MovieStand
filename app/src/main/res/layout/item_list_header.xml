@@ -1,20 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tool="http://schemas.android.com/tools"
-    android:background="@color/gray_dark"
-    android:orientation="vertical">
+    android:background="@drawable/bg_red_to_orange_gradient"
+    android:orientation="horizontal">
 
     <TextView
         android:id="@+id/item_list_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAlignment="textEnd"
-        style="@style/TitleText"
-        tool:text="@string/ipsum_small"
         android:paddingStart="@dimen/margin_medium"
-        android:paddingEnd="@dimen/margin_medium"
         android:paddingTop="@dimen/margin_small"
-        android:paddingBottom="@dimen/margin_small"/>
-</LinearLayout>
+        android:paddingEnd="@dimen/margin_medium"
+        android:paddingBottom="@dimen/margin_small"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        style="@style/TitleText"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        tool:text="@string/ipsum_small" />
+
+    <LinearLayout
+        android:id="@+id/item_list_star_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="@dimen/margin_small"
+        android:layout_marginBottom="@dimen/margin_small"
+        android:visibility="gone"
+        android:orientation="horizontal"/>
+</RelativeLayout>
