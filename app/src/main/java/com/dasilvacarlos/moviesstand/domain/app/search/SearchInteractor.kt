@@ -1,7 +1,8 @@
-package com.dasilvacarlos.moviesstand.domain.search
+package com.dasilvacarlos.moviesstand.domain.app.search
 
 import com.dasilvacarlos.moviesstand.R
 import com.dasilvacarlos.moviesstand.data.generics.ServiceError
+import com.dasilvacarlos.moviesstand.data.models.ResumedMovieModel
 import com.dasilvacarlos.moviesstand.data.models.SearchMovieResultModel
 import com.dasilvacarlos.moviesstand.data.workers.search.SearchProvider
 import com.dasilvacarlos.moviesstand.data.workers.search.SearchReceiver
@@ -9,7 +10,9 @@ import com.dasilvacarlos.moviesstand.data.workers.search.SearchWorker
 import com.dasilvacarlos.moviesstand.presentation.generic.MovieStandApplication
 
 
-class SearchInteractor(view: SearchViewLogic): SearchInteractorLogic, SearchReceiver {
+class SearchInteractor(view: SearchViewLogic): SearchInteractorLogic, SearchDataStore, SearchReceiver {
+
+    override var moviesSearched: ArrayList<ResumedMovieModel> = arrayListOf()
 
     private val searchWorker: SearchProvider = SearchWorker(this)
     private val presenter: SearchPresenterLogic = SearchPresenter(view)
@@ -44,7 +47,10 @@ class SearchInteractor(view: SearchViewLogic): SearchInteractorLogic, SearchRece
             val response = SearchUserCases.SearchForMovieTitle
                     .Result(searchResult = result,
                             favorites = HashMap())
-
+            response.searchResult.search?.let {
+                moviesSearched.clear()
+                moviesSearched.addAll(it)
+            }
             presenter.presentSearchResponse(response)
         }
     }

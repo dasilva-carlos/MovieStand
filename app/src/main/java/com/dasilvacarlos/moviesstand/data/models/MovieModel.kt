@@ -1,9 +1,10 @@
 package com.dasilvacarlos.moviesstand.data.models
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 
-class MovieModel {
+class MovieModel: Serializable {
     @SerializedName("Title")
     val title: String? = null
 

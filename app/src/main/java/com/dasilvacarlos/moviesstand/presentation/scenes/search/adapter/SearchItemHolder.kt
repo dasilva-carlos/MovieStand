@@ -1,12 +1,9 @@
 package com.dasilvacarlos.moviesstand.presentation.scenes.search.adapter
 
 import android.support.v7.widget.RecyclerView
-import android.view.Gravity.TOP
 import android.view.View
 import com.dasilvacarlos.moviesstand.R
-import com.dasilvacarlos.moviesstand.domain.search.SearchUserCases
-import com.ethanhua.skeleton.Skeleton
-import com.ethanhua.skeleton.ViewSkeletonScreen
+import com.dasilvacarlos.moviesstand.domain.app.search.SearchUserCases
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_search_list.view.*
 
@@ -23,5 +20,9 @@ class SearchItemHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
         itemView.item_search_movie_title_text.text = viewModel.title
         itemView.item_search_year_text.text = viewModel.year
+    }
+
+    fun configOnClick(onItemClick: View.OnClickListener) {
+        itemView.item_search_card_view.setOnClickListener(onItemClick)
     }
 }

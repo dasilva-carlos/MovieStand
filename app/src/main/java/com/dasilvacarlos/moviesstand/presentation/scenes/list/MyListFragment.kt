@@ -10,7 +10,7 @@ import com.dasilvacarlos.moviesstand.presentation.generic.GenericFragment
 
 class MyListFragment: GenericFragment(), MyListView {
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater?.inflate(R.layout.fragment_my_list, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_my_list, container, false)
     }
 }

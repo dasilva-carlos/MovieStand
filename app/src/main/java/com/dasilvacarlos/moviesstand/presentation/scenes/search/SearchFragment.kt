@@ -12,17 +12,17 @@ import kotlinx.android.synthetic.main.fragment_search.*
 import android.animation.ValueAnimator
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
+import android.support.v4.app.ActivityOptionsCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.KeyEvent
 import android.widget.RelativeLayout
 import com.dasilvacarlos.moviesstand.data.generics.ServiceError
-import com.dasilvacarlos.moviesstand.domain.search.SearchInteractor
-import com.dasilvacarlos.moviesstand.domain.search.SearchInteractorLogic
-import com.dasilvacarlos.moviesstand.domain.search.SearchUserCases
-import com.dasilvacarlos.moviesstand.domain.search.SearchViewLogic
+import com.dasilvacarlos.moviesstand.domain.app.search.*
+import com.dasilvacarlos.moviesstand.presentation.generic.MovieStandApplication
 import com.dasilvacarlos.moviesstand.presentation.main_navigation.NavigationViewLogic
+import com.dasilvacarlos.moviesstand.presentation.scenes.detail.DetailsContainerActivity
 import com.dasilvacarlos.moviesstand.presentation.scenes.search.adapter.SearchListAdapter
 
 
@@ -34,6 +34,7 @@ class SearchFragment: GenericFragment(), SearchViewLogic {
     }
 
     private val interactor: SearchInteractorLogic = SearchInteractor(this)
+    private val dataStore: SearchDataStore? by lazy { interactor as? SearchDataStore }
 
     private var searchViewLayoutParams: RelativeLayout.LayoutParams? = null
     private var roundBorderSize: Float? = null
@@ -47,17 +48,17 @@ class SearchFragment: GenericFragment(), SearchViewLogic {
     private var isSearchDisplayed = false
     private var lastAnimator: Animator? = null
 
-    private val searchListAdapter: SearchListAdapter by lazy { SearchListAdapter(context) }
+    private val searchListAdapter: SearchListAdapter by lazy { SearchListAdapter(context!!) }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater?.inflate(R.layout.fragment_search, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_search, container, false)
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        prepareListeners()
         prepareDefaultAnimationValues()
         prepareSearchList()
+        prepareListeners()
     }
 
     override fun displaySearchResult(viewModel: SearchUserCases.SearchForMovieTitle.ViewModel) {
@@ -66,7 +67,7 @@ class SearchFragment: GenericFragment(), SearchViewLogic {
 
     override fun displayError(request: Any, error: ServiceError) {
         when (request){
-            is SearchUserCases.SearchForMovieTitle.Request -> searchListAdapter.setErrorMessage(error.getDescription(context))
+            is SearchUserCases.SearchForMovieTitle.Request -> searchListAdapter.setErrorMessage(error.getDescription(context ?: MovieStandApplication.instance.applicationContext))
             else -> super.displayError(request, error)
         }
     }
@@ -87,7 +88,6 @@ class SearchFragment: GenericFragment(), SearchViewLogic {
         search_edit_text.onKeyPreImeListener = { _, event ->
             (event?.keyCode == KeyEvent.KEYCODE_BACK && event.action == KeyEvent.ACTION_UP).apply {
                 if(this) {
-
                     dispatchHideSearch()
                 }
             }
@@ -101,12 +101,19 @@ class SearchFragment: GenericFragment(), SearchViewLogic {
                 requestQuery(titleQuery)
             }
         })
+
+        searchListAdapter.itemClick = { index ->
+            dataStore?.let { dataStore ->
+                val intent = DetailsContainerActivity.getNewIntent(context!!, dataStore.moviesSearched, index)
+                startActivity(intent)
+            }
+        }
     }
 
     private fun requestQuery(titleQuery: String) {
         val request = SearchUserCases.SearchForMovieTitle.Request(titleQuery)
         searchListAdapter.clearItems()
-        searchListAdapter.setErrorMessage(context.getString(R.string.search_searching))
+        searchListAdapter.setErrorMessage(context!!.getString(R.string.search_searching))
         interactor.searchForMovieTitle(request)
     }
 

@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">Movies Stand</string>
 
+    <!-- Ipsum Lorem-->
+    <string name="ipsum_small">Lorem ipsum</string>
+    <string name="ipsum_medium">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sollicitudin lacus orci, egestas rhoncus erat facilisis sed.</string>
+    <string name="ipsum_big">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sollicitudin lacus orci, egestas rhoncus erat facilisis sed. Sed efficitur massa id nibh sagittis consequat in nec libero. Quisque mollis sagittis dui, quis scelerisque orci iaculis ac. Phasellus sed pulvinar libero. Cras et rutrum massa, ac aliquet leo. Interdum et malesuada fames ac ante ipsum primis in faucibus. Aenean neque erat, elementum at turpis sed, mattis feugiat ipsum. Vivamus semper risus et nisi vehicula, ac tempus nibh consectetur.</string>
+
     <!--Bottom Main Menu-->
     <string name="menu_item_search">Search</string>
     <string name="menu_item_favorites">Favorites</string>
@@ -18,6 +23,16 @@
 
     <!-- Generics-->
     <string name="year">Year:</string>
-    <string name="rating">Rating:</string>
 
+    <!--Details-->
+    <string name="details_released">Released:</string>
+    <string name="details_runtime">Duration:</string>
+    <string name="details_genre">Genre:</string>
+    <string name="details_director">Director:</string>
+    <string name="details_writer">Writer:</string>
+    <string name="details_directors">Directors:</string>
+    <string name="details_writers">Writers:</string>
+    <string name="details_actors">Actors:</string>
+    <string name="details_rating">Rating:</string>
+    <string name="details_plot">Resume:</string>
 </resources>

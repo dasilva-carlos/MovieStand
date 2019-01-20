@@ -1,4 +1,4 @@
-package com.dasilvacarlos.moviesstand.domain.search
+package com.dasilvacarlos.moviesstand.domain.app.search
 
 import com.dasilvacarlos.moviesstand.data.generics.ServiceError
 

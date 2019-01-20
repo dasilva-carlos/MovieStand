@@ -2,11 +2,11 @@ package com.dasilvacarlos.moviesstand.presentation.scenes.search.adapter
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
-import android.util.SparseArray
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import com.dasilvacarlos.moviesstand.R
-import com.dasilvacarlos.moviesstand.domain.search.SearchUserCases
+import com.dasilvacarlos.moviesstand.domain.app.search.SearchUserCases
 
 
 class SearchListAdapter(val context: Context): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -17,18 +17,19 @@ class SearchListAdapter(val context: Context): RecyclerView.Adapter<RecyclerView
         const val ITEM_VIEW = 1
     }
 
+    var itemClick: ((Int) -> (Unit))? = null
     private val viewModels: MutableList<SearchUserCases.SearchForMovieTitle.ViewModel.Item> = mutableListOf()
     private var itemCount = DEFAULT_RESULT_NUMBER
     private var errorMessage: String? = context.getString(R.string.search_type)
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         if (viewType == WARNING_VIEW) {
-            val view = LayoutInflater.from(parent?.context)
+            val view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.item_warning, parent, false)
             return WarningItemHolder(view)
         }
 
-        val view = LayoutInflater.from(parent?.context)
+        val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.item_search_list, parent, false)
         return SearchItemHolder(view)
     }
@@ -41,11 +42,12 @@ class SearchListAdapter(val context: Context): RecyclerView.Adapter<RecyclerView
         return if(errorMessage != null) 1 else viewModels.count()
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if(holder is SearchItemHolder) {
             if (viewModels.count() > position) {
                 val viewModel = viewModels[position]
                 holder.dataBind(viewModel)
+                holder.configOnClick(onItemClick = View.OnClickListener { itemClick?.invoke(position) })
             }
         }
 

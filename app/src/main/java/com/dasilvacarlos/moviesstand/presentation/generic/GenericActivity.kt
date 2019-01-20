@@ -1,6 +1,7 @@
 package com.dasilvacarlos.moviesstand.presentation.generic
 
 import android.app.Activity
+import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -26,5 +27,9 @@ abstract class GenericActivity: AppCompatActivity(), GenericView {
     override fun hideKeyboard() {
         val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(currentFocus.windowToken, 0)
+    }
+
+    override fun getBundle(): Bundle {
+        return intent.extras
     }
 }

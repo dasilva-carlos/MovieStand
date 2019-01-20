@@ -1,5 +1,6 @@
-package com.dasilvacarlos.moviesstand.domain.search
+package com.dasilvacarlos.moviesstand.domain.app.search
 
+import com.dasilvacarlos.moviesstand.data.models.ResumedMovieModel
 import com.dasilvacarlos.moviesstand.data.models.SearchMovieResultModel
 import com.dasilvacarlos.moviesstand.domain.generics.InteractorLogic
 import com.dasilvacarlos.moviesstand.domain.generics.PresenterLogic
@@ -36,4 +37,8 @@ interface SearchPresenterLogic: PresenterLogic {
 
 interface SearchViewLogic: ViewLogic {
     fun displaySearchResult(viewModel: SearchUserCases.SearchForMovieTitle.ViewModel)
+}
+
+interface SearchDataStore {
+    val moviesSearched: ArrayList<ResumedMovieModel>
 }

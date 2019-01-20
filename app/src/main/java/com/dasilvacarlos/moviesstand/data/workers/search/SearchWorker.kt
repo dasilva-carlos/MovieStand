@@ -31,6 +31,8 @@ class SearchWorker(val receiver: SearchReceiver) : SearchProvider {
             val body = response.body()
             if (body != null) {
                 receiver.onReceiveSearchResult(body, title, page)
+            } else {
+                receiver.onSearchError(title, page, ServiceError.resolveError(response))
             }
         }
 
