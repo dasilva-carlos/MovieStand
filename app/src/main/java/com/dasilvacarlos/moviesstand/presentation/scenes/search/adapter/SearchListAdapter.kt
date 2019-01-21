@@ -82,6 +82,17 @@ class SearchListAdapter(val context: Context): RecyclerView.Adapter<RecyclerView
         notifyItemChanged(viewModel.index)
     }
 
+    fun updateIsFavorite(viewModel: SearchUserCases.CheckFavorite.ViewModel) {
+        if(viewModels.count() > 0) {
+            for (index in 0 until viewModels.count()) {
+                if (viewModels[index].isFavorite != viewModel.isFavorite[index]) {
+                    viewModels[index].isFavorite = viewModel.isFavorite[index]
+                    notifyItemChanged(index)
+                }
+            }
+        }
+    }
+
     fun setErrorMessage(error: String) {
         if (errorMessage != error) {
             errorMessage = error

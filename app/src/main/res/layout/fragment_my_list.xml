@@ -80,9 +80,10 @@
         android:visibility="visible"
         style="@style/NormalText"/>
     <View
+        android:id="@+id/list_divider"
         android:layout_width="match_parent"
         android:layout_height="@dimen/divider"
-        android:background="@color/orange_light"/>
+        android:background="@color/reddish"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/list_recycler_view"

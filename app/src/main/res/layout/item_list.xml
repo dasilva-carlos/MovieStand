@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tool="http://schemas.android.com/tools"
-    android:background="@color/black"
+    android:background="@color/gray_dark"
     android:orientation="vertical">
 
     <TextView
@@ -21,5 +21,5 @@
         android:id="@+id/item_list_divider"
         android:layout_width="match_parent"
         android:layout_height="@dimen/divider"
-        android:background="@color/orange_light"/>
+        android:background="@color/reddish"/>
 </LinearLayout>

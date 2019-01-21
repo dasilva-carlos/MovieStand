@@ -11,7 +11,8 @@ interface OmdbApi {
     fun searchMovieByTitle(@Query("apiKey") apiKey: String,
                            @Query("s") titleQuery: String,
                            @Query("page") page: Int,
-                           @Query("plot") plot: String) : Call<SearchMovieResultModel>
+                           @Query("plot") plot: String,
+                           @Query("type") type: String = "movie") : Call<SearchMovieResultModel>
 
     @GET(".")
     fun searchMovieById(@Query("apiKey") apiKey: String,

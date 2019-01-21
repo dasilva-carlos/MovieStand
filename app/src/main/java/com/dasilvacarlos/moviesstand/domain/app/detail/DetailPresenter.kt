@@ -30,7 +30,7 @@ class DetailPresenter(val view: DetailViewLogic): DetailPresenterLogic {
                                writer = response.movie.writer ?: "-",
                                actors = response.movie.actors ?: "-",
                                plot = response.movie.plot ?: "-",
-                               rating = response.movie.imdbRating ?: "-")
+                               rating = response.movie.imdbRating?.replace("null", "-") ?: "-")
 
             view.displayInformation(viewModel)
 

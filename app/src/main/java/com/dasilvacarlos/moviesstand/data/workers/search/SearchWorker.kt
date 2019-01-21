@@ -14,7 +14,7 @@ class SearchWorker(val receiver: SearchReceiver) : SearchProvider {
     private val callsList: MutableList<Call<SearchMovieResultModel>> = mutableListOf()
 
     override fun searchForMovieByTitle(title: String, page: Int) {
-        val query = "%$title%"
+        val query = title
         callsList.add(OmdbService.searchByName(query, page + 1, getCallback(title, page)))
     }
 

@@ -9,6 +9,9 @@ import com.dasilvacarlos.moviesstand.data.workers.detail.DetailReceiver
 import com.dasilvacarlos.moviesstand.data.workers.detail.DetailWorker
 import com.dasilvacarlos.moviesstand.data.workers.favorites.FavoritesReceiver
 import com.dasilvacarlos.moviesstand.data.workers.favorites.FavoritesWorker
+import com.dasilvacarlos.moviesstand.data.workers.recommendations.RecommendationsProvider
+import com.dasilvacarlos.moviesstand.data.workers.recommendations.RecommendationsReceiver
+import com.dasilvacarlos.moviesstand.data.workers.recommendations.RecommendationsWorker
 import com.dasilvacarlos.moviesstand.data.workers.search.SearchProvider
 import com.dasilvacarlos.moviesstand.data.workers.search.SearchReceiver
 import com.dasilvacarlos.moviesstand.data.workers.search.SearchWorker
@@ -17,11 +20,19 @@ import com.dasilvacarlos.moviesstand.presentation.generic.MovieStandApplication
 
 class SearchInteractor(view: SearchViewLogic): SearchInteractorLogic, SearchDataStore, SearchReceiver {
 
+    companion object {
+        const val DEFAULT_RECOMMENDATIONS_QUANTITY = 15
+    }
+
+    override val recommendations: ArrayList<MovieModel> = arrayListOf()
+
     override var moviesSearched: ArrayList<ResumedMovieModel> = arrayListOf()
 
     private val searchWorker: SearchProvider = SearchWorker(this)
     private val presenter: SearchPresenterLogic = SearchPresenter(view)
     private var detailWorker: DetailWorker? = null
+    private var recommendationsWorker: RecommendationsProvider =
+            RecommendationsWorker(MovieStandApplication.instance.applicationContext, getRecommendationsReceiver())
 
     private var lastSearchRequest: SearchUserCases.SearchForMovieTitle.Request? = null
 
@@ -31,9 +42,14 @@ class SearchInteractor(view: SearchViewLogic): SearchInteractorLogic, SearchData
             searchWorker.cancelRequests()
             searchWorker.searchForMovieByTitle(request.search)
         } else {
-            var result = SearchMovieResultModel()
+            val result = SearchMovieResultModel()
             result.response = false
-            result.error = MovieStandApplication.instance.applicationContext.getString(R.string.search_keep_type)
+            result.error = if(request.search.count() > 0){
+                MovieStandApplication.instance.applicationContext.getString(R.string.search_keep_type)
+            } else {
+                MovieStandApplication.instance.applicationContext.getString(R.string.search_type)
+            }
+
             val response = SearchUserCases.SearchForMovieTitle
                     .Result(searchResult = result,
                             favorites = HashMap())
@@ -71,6 +87,16 @@ class SearchInteractor(view: SearchViewLogic): SearchInteractorLogic, SearchData
         }
     }
 
+    override fun requestRecommendations(request: SearchUserCases.Recommendations.Request) {
+        recommendationsWorker.subscribeToRecommendations(DEFAULT_RECOMMENDATIONS_QUANTITY)
+    }
+
+    override fun checkFavorites(request: SearchUserCases.CheckFavorite.Request) {
+        val favoritesWorker = FavoritesWorker(getCheckIsFavoriteReceiver())
+        val ids = moviesSearched.map { it.id ?: "" }
+        favoritesWorker.checkIfIsFavorite(ids)
+    }
+
     private fun getOnSaveStateChangedReceiver(index: Int)  = object : FavoritesReceiver {
         override fun onSaveResult(isSaved: Boolean, id: String?) {
             presenter.presentFavoriteChange(SearchUserCases.ChangeFavorite.Result(isSaved, isSaved, index))
@@ -84,15 +110,23 @@ class SearchInteractor(view: SearchViewLogic): SearchInteractorLogic, SearchData
     private fun getCheckIsFavoriteReceiver(query: String, result: SearchMovieResultModel) = object : FavoritesReceiver {
         override fun onFavoritesCheckResult(isFavorite: Map<String, Boolean>) {
             if (lastSearchRequest?.search == query) {
-                val response = SearchUserCases.SearchForMovieTitle
-                        .Result(searchResult = result,
-                                favorites = isFavorite)
-                response.searchResult.search?.let {
+                result.search?.let {
                     moviesSearched.clear()
                     moviesSearched.addAll(it)
                 }
+
+                val response = SearchUserCases.SearchForMovieTitle
+                        .Result(searchResult = result,
+                                favorites = isFavorite)
+
                 presenter.presentSearchResponse(response)
             }
+        }
+    }
+
+    private fun getCheckIsFavoriteReceiver() = object : FavoritesReceiver {
+        override fun onFavoritesCheckResult(isFavorite: Map<String, Boolean>) {
+            presenter.presentFavorites(SearchUserCases.CheckFavorite.Result(moviesSearched, isFavorite))
         }
     }
 
@@ -105,6 +139,17 @@ class SearchInteractor(view: SearchViewLogic): SearchInteractorLogic, SearchData
         override fun onReceiveResult(result: MovieModel) {
             val favoritesWorker = FavoritesWorker(getOnSaveStateChangedReceiver(index))
             favoritesWorker.saveAsFavorite(result)
+        }
+    }
+
+    private fun getRecommendationsReceiver() = object : RecommendationsReceiver{
+        override fun onRecommendationReceived(movie: MovieModel) {
+            recommendations.add(movie)
+            presenter.presentRecommendations(SearchUserCases.Recommendations.Result(movie = movie))
+        }
+
+        override fun onError(error: ServiceError) {
+            presenter.presentError(SearchUserCases.Recommendations.Request(), error)
         }
     }
 }

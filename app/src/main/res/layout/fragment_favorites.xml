@@ -34,7 +34,7 @@
         android:layout_height="match_parent"
         android:requiresFadingEdge="vertical"
         android:fadingEdge="vertical"
-        android:fadingEdgeLength="@dimen/margin_medium">
+        android:fadingEdgeLength="@dimen/margin_small">
 
     </android.support.v7.widget.RecyclerView>
 

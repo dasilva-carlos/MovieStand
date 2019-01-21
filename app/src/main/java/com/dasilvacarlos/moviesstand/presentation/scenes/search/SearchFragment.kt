@@ -12,11 +12,12 @@ import kotlinx.android.synthetic.main.fragment_search.*
 import android.animation.ValueAnimator
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
-import android.support.v4.app.ActivityOptionsCompat
+import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.KeyEvent
+import android.view.inputmethod.EditorInfo
 import android.widget.RelativeLayout
 import com.dasilvacarlos.moviesstand.data.generics.ServiceError
 import com.dasilvacarlos.moviesstand.domain.app.search.*
@@ -24,6 +25,9 @@ import com.dasilvacarlos.moviesstand.presentation.generic.MovieStandApplication
 import com.dasilvacarlos.moviesstand.presentation.main_navigation.NavigationViewLogic
 import com.dasilvacarlos.moviesstand.presentation.scenes.detail.DetailsContainerActivity
 import com.dasilvacarlos.moviesstand.presentation.scenes.search.adapter.SearchListAdapter
+import com.dasilvacarlos.moviesstand.presentation.scenes.search.recommendationsAdapter.RecommendationsAdapter
+import android.view.animation.AnimationUtils
+import android.widget.ImageView
 
 
 class SearchFragment: GenericFragment(), SearchViewLogic {
@@ -48,6 +52,7 @@ class SearchFragment: GenericFragment(), SearchViewLogic {
     private var lastAnimator: Animator? = null
 
     private val searchListAdapter: SearchListAdapter by lazy { SearchListAdapter(context!!) }
+    private val recommendationsListAdapter: RecommendationsAdapter by lazy { RecommendationsAdapter(context!!) }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_search, container, false)
@@ -56,8 +61,18 @@ class SearchFragment: GenericFragment(), SearchViewLogic {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         prepareDefaultAnimationValues()
+        prepareImageSwitcher()
         prepareSearchList()
+        prepareRecommendationsList()
         prepareListeners()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        checkFavoritesRefresh()
+        if(recommendationsListAdapter.itemCount == 0) {
+            requestRecommendations()
+        }
     }
 
     override fun displaySearchResult(viewModel: SearchUserCases.SearchForMovieTitle.ViewModel) {
@@ -71,10 +86,41 @@ class SearchFragment: GenericFragment(), SearchViewLogic {
         }
     }
 
+    override fun displayRecommendations(viewModel: SearchUserCases.Recommendations.ViewModel) {
+        search_recommendations_error.visibility = View.GONE
+        recommendationsListAdapter.passViewModel(viewModel)
+    }
+
+    override fun displayFavorites(viewModel: SearchUserCases.CheckFavorite.ViewModel) {
+        searchListAdapter.updateIsFavorite(viewModel)
+    }
+
     override fun displayError(request: Any, error: ServiceError) {
         when (request){
             is SearchUserCases.SearchForMovieTitle.Request -> searchListAdapter.setErrorMessage(error.getDescription(context ?: MovieStandApplication.instance.applicationContext))
+            is SearchUserCases.Recommendations.Request -> {
+                if (recommendationsListAdapter.itemCount == 0) {
+                    search_recommendations_error.visibility = View.VISIBLE
+                }
+            }
             else -> super.displayError(request, error)
+        }
+    }
+
+    private fun requestQuery(titleQuery: String) {
+        val request = SearchUserCases.SearchForMovieTitle.Request(titleQuery)
+        searchListAdapter.clearItems()
+        searchListAdapter.setErrorMessage(context!!.getString(R.string.search_searching))
+        interactor.searchForMovieTitle(request)
+    }
+
+    private fun requestRecommendations() {
+        interactor.requestRecommendations(SearchUserCases.Recommendations.Request())
+    }
+
+    private fun checkFavoritesRefresh() {
+        if(searchListAdapter.itemCount > 0) {
+            interactor.checkFavorites(SearchUserCases.CheckFavorite.Request())
         }
     }
 
@@ -108,6 +154,16 @@ class SearchFragment: GenericFragment(), SearchViewLogic {
             }
         })
 
+        search_edit_text.setOnEditorActionListener { v, actionId, event ->
+            return@setOnEditorActionListener when (actionId) {
+                EditorInfo.IME_ACTION_SEARCH -> {
+                    hideKeyboard()
+                    true
+                }
+                else -> false
+            }
+        }
+
         searchListAdapter.itemClick = { index ->
             dataStore?.let { dataStore ->
                 val intent = DetailsContainerActivity.getNewIntent(context!!, dataStore.moviesSearched, index)
@@ -119,13 +175,13 @@ class SearchFragment: GenericFragment(), SearchViewLogic {
             interactor.requestFavoriteChange(SearchUserCases.ChangeFavorite
                     .Request(index = index, isFavorite = save))
         }
-    }
 
-    private fun requestQuery(titleQuery: String) {
-        val request = SearchUserCases.SearchForMovieTitle.Request(titleQuery)
-        searchListAdapter.clearItems()
-        searchListAdapter.setErrorMessage(context!!.getString(R.string.search_searching))
-        interactor.searchForMovieTitle(request)
+        recommendationsListAdapter.itemClick = { index ->
+            dataStore?.let { dataStore ->
+                val intent = DetailsContainerActivity.getNewIntentDetailed(context!!, dataStore.recommendations, index)
+                startActivity(intent)
+            }
+        }
     }
 
     private fun prepareDefaultAnimationValues() {
@@ -164,6 +220,7 @@ class SearchFragment: GenericFragment(), SearchViewLogic {
                 }
             })
         }
+        search_image.setImageResource(R.drawable.ic_back)
         lastAnimator?.start()
     }
 
@@ -191,6 +248,7 @@ class SearchFragment: GenericFragment(), SearchViewLogic {
                 }
             })
         }
+        search_image.setImageResource(R.drawable.ic_search_gray)
         lastAnimator?.start()
     }
 
@@ -217,15 +275,28 @@ class SearchFragment: GenericFragment(), SearchViewLogic {
         }
     }
 
+    private fun prepareImageSwitcher(){
+        search_image.setFactory { ImageView(context).apply {setColorFilter( R.color.gray_light)} }
+        search_image.setImageResource(R.drawable.ic_search_gray)
+        search_image.inAnimation =  AnimationUtils.loadAnimation(context, android.R.anim.fade_in).apply { startOffset = 500 }
+        search_image.outAnimation = AnimationUtils.loadAnimation(context,  android.R.anim.fade_out).apply { duration = 300 }
+    }
+
     private fun prepareSearchList() {
         val viewManager = LinearLayoutManager(context)
 
         search_recycler_view.apply {
-            // use a linear layout manager
             layoutManager = viewManager
-
-            // specify an viewAdapter (see also next example)
             adapter = searchListAdapter
+        }
+    }
+
+    private fun prepareRecommendationsList() {
+        val viewManager = GridLayoutManager(context!!, 3)
+
+        search_recommendations_recycler_view.apply {
+            layoutManager = viewManager
+            adapter = recommendationsListAdapter
         }
     }
 

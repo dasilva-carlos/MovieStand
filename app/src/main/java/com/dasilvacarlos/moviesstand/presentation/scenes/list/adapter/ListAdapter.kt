@@ -91,6 +91,6 @@ class ListAdapter (val context: Context): RecyclerView.Adapter<RecyclerView.View
                 count++
             }
         }
-        return count-1
+        return count
     }
 }

@@ -14,6 +14,7 @@
     <!-- Search Fragment-->
     <string name="search_hint">Search Movie</string>
     <string name="search_our_recommendations">Our Recommendations</string>
+    <string name="search_our_recommendations_fail">Recommendations not found</string>
     <string name="search_type">Type Movie Title</string>
     <string name="search_keep_type">Keep Typing… \n\n(3 characters minimum)</string>
     <string name="search_searching">Searching…</string>
@@ -44,6 +45,7 @@
     <string name="list_order_by_titles">Title</string>
     <string name="list_order_by_rating">Rating</string>
     <string name="list_order_by_release">Release</string>
+    <string name="list_unrated">Unrated</string>
 
     <string name="list_message">Empty list</string>
 </resources>

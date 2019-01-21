@@ -1,9 +1,10 @@
 package com.dasilvacarlos.moviesstand.data.models
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 
-class RatingModel {
+class RatingModel: Serializable {
     @SerializedName("Source")
     val source: String? = null
 

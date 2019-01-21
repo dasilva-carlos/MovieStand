@@ -22,10 +22,26 @@
         style="@style/TitleText"/>
 
     <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
+        android:id="@+id/search_recommendations_recycler_view"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/margin_medium"
+        android:requiresFadingEdge="vertical"
+        android:fadingEdge="vertical"
+        android:fadingEdgeLength="@dimen/margin_small"
         android:layout_below="@id/search_recommendations_title"/>
+
+    <TextView
+        android:id="@+id/search_recommendations_error"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_medium"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:layout_marginTop="@dimen/margin_big"
+        android:layout_below="@id/search_recommendations_title"
+        android:visibility="gone"
+        android:text="@string/search_our_recommendations_fail"
+        style="@style/NormalText"/>
 
     <View
         android:id="@+id/search_semi_transparent_view"
@@ -47,13 +63,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
+        <ImageSwitcher
+            android:id="@+id/search_image"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_gravity="center_vertical"
-            android:contentDescription="@string/search_hint"
-            android:src="@drawable/ic_search"
-            android:tint="@color/text_gray_light" />
+            android:contentDescription="@string/search_hint" />
 
         <com.dasilvacarlos.moviesstand.presentation.library.custom_views.ExtendedEditText
             android:id="@+id/search_edit_text"
@@ -64,8 +79,10 @@
             android:background="@android:color/transparent"
             android:fontFamily="@font/comfortaa_regular"
             android:hint="@string/search_hint"
-            android:textColor="@color/text_gray"
-            android:textColorHint="@color/text_gray_light" />
+            android:inputType="textShortMessage"
+            android:textColor="@color/gray_medium"
+            android:textColorHint="@color/gray_light"
+            android:imeOptions="actionSearch"/>
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView

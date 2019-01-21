@@ -54,14 +54,14 @@
                     <View
                         android:id="@+id/detail_shadow"
                         android:layout_width="match_parent"
-                        android:layout_height="70dp"
+                        android:layout_height="75dp"
                         android:background="@drawable/bg_transparent_to_black_vertical"
                         android:layout_above="@id/detail_toolbar_background"/>
 
                     <View
                         android:id="@+id/detail_toolbar_background"
                         android:layout_width="match_parent"
-                        android:layout_height="60dp"
+                        android:layout_height="65dp"
                         android:background="@color/black"
                         android:layout_alignParentBottom="true"/>
 
@@ -71,7 +71,7 @@
                         android:layout_height="80dp"
                         android:layout_alignParentBottom="true"
                         android:layout_alignParentEnd="true"
-                        android:layout_marginBottom="70dp"
+                        android:layout_marginBottom="68dp"
                         android:padding="@dimen/margin_medium"
                         android:src="@drawable/ic_star_empty" />
 

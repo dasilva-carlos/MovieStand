@@ -62,9 +62,11 @@ class MyListFragment: GenericFragment(), ListViewLogic, View.OnClickListener {
     override fun displayFavorites(viewModel: ListUserCases.FavoritesList.ViewModel) {
         if(viewModel.items.count() > 0) {
             list_empty_text.visibility = View.GONE
+            list_divider.visibility = View.VISIBLE
             listAdapter.passViewModel(viewModel, orderSelect == OrderSelect.RATING)
         } else {
             list_empty_text.visibility = View.VISIBLE
+            list_divider.visibility = View.GONE
             listAdapter.clear()
         }
     }

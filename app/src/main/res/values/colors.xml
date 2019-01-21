@@ -11,8 +11,8 @@
     <color name="reddish">#de3643</color>
     <color name="blue">#9FA8DA</color>
     <color name="white">#FAFAFA</color>
-    <color name="text_gray_light">#BDBDBD</color>
-    <color name="text_gray">#424242</color>
+    <color name="gray_light">#BDBDBD</color>
+    <color name="gray_medium">#424242</color>
 
     <color name="half_transparent">#99262626</color>
     <color name="transparent">#00000000</color>

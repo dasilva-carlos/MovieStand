@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import com.dasilvacarlos.moviesstand.R
+import com.dasilvacarlos.moviesstand.presentation.generic.MovieStandApplication
 import kotlinx.android.synthetic.main.item_list_header.view.*
 import java.lang.NumberFormatException
 
@@ -18,6 +19,9 @@ class ListHeaderHolder (itemView: View): RecyclerView.ViewHolder(itemView) {
             try {
                 setStars(context, viewModel.toInt())
             }catch (e:NumberFormatException){
+                itemView.item_list_title.visibility = View.VISIBLE
+                itemView.item_list_star_layout.visibility = View.GONE
+                itemView.item_list_title.text = MovieStandApplication.instance.getText(R.string.list_unrated)
                 print(e.localizedMessage)
             }
         } else {

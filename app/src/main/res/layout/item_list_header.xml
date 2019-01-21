@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tool="http://schemas.android.com/tools"
-    android:background="@drawable/bg_red_to_orange_gradient"
+    android:background="@drawable/bg_orange_to_red_gradient"
     android:orientation="horizontal">
 
     <TextView
