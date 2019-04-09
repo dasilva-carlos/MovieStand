@@ -70,6 +70,7 @@ class SearchInteractor(view: SearchViewLogic): SearchInteractorLogic, SearchData
 
     override fun cancelRequests() {
         searchWorker.cancelRequests()
+        recommendationsWorker.unsubscribe()
         detailWorker?.cancelRequests()
     }
 

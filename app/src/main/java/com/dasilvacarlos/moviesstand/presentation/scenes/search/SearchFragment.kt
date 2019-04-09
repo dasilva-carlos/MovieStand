@@ -70,9 +70,14 @@ class SearchFragment: GenericFragment(), SearchViewLogic {
     override fun onResume() {
         super.onResume()
         checkFavoritesRefresh()
-        if(recommendationsListAdapter.itemCount == 0) {
+        if(recommendationsListAdapter.itemCount < SearchInteractor.DEFAULT_RECOMMENDATIONS_QUANTITY) {
             requestRecommendations()
         }
+    }
+
+    override fun onDetach() {
+        interactor.cancelRequests()
+        super.onDetach()
     }
 
     override fun displaySearchResult(viewModel: SearchUserCases.SearchForMovieTitle.ViewModel) {
